@@ -52,26 +52,25 @@ function draw() {
 setInterval(draw, 33);
 
 // Music handling
-const musicFiles = [
-    'assets/Tweezer Womp (4).mp3',
-    'assets/Tweezer Womp (5).mp3',
-    'assets/Tweezer Womp (6).mp3',
-    'assets/Tweezer Womp (7).mp3'
+const sunoTracks = [
+    'https://suno.com/song/c4148f17-1955-4c01-8fd6-39c18a2b209f?sh=GqZUbQNZM0mtj6e3',
+    'https://suno.com/song/eea3b209-c4f9-4189-af91-4cf204213139?sh=dTLUSaK3zAWG9HtE'
 ];
 
-let currentTrack = 0;
-let audio = new Audio();
+// Create a hidden iframe for the first track
+const iframe = document.createElement('iframe');
+iframe.style.display = 'none';
+document.body.appendChild(iframe);
 
-function playNextTrack() {
-    audio.src = musicFiles[currentTrack];
-    audio.play();
-    currentTrack = (currentTrack + 1) % musicFiles.length;
+// Function to load the next track
+function loadNextTrack() {
+    const currentUrl = iframe.src;
+    const currentIndex = sunoTracks.indexOf(currentUrl);
+    const nextIndex = (currentIndex + 1) % sunoTracks.length;
+    iframe.src = sunoTracks[nextIndex];
 }
-
-// Handle audio events
-audio.addEventListener('ended', playNextTrack);
 
 // Start playing when the page loads
 window.addEventListener('load', () => {
-    playNextTrack();
+    iframe.src = sunoTracks[0];
 }); 
