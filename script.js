@@ -49,28 +49,4 @@ function draw() {
 }
 
 // Animation loop
-setInterval(draw, 33);
-
-// Music handling
-const sunoTracks = [
-    'https://suno.com/song/c4148f17-1955-4c01-8fd6-39c18a2b209f?sh=GqZUbQNZM0mtj6e3',
-    'https://suno.com/song/eea3b209-c4f9-4189-af91-4cf204213139?sh=dTLUSaK3zAWG9HtE'
-];
-
-// Create a hidden iframe for the first track
-const iframe = document.createElement('iframe');
-iframe.style.display = 'none';
-document.body.appendChild(iframe);
-
-// Function to load the next track
-function loadNextTrack() {
-    const currentUrl = iframe.src;
-    const currentIndex = sunoTracks.indexOf(currentUrl);
-    const nextIndex = (currentIndex + 1) % sunoTracks.length;
-    iframe.src = sunoTracks[nextIndex];
-}
-
-// Start playing when the page loads
-window.addEventListener('load', () => {
-    iframe.src = sunoTracks[0];
-}); 
+setInterval(draw, 33); 

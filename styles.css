@@ -320,4 +320,15 @@ h1 {
     100% {
         clip: rect(54px, 450px, 84px, 0);
     }
+}
+
+.music-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 10, 0.9);
+    border-top: 2px solid var(--neon-purple);
+    box-shadow: 0 -5px 20px var(--neon-purple);
+    z-index: 100;
 } 
