@@ -21,27 +21,27 @@ outline of what i think needs to happen next and what i've done
 
 
 # TODO
+# TODO: Build AI-Powered Multiplayer Jeopardy Game
+
+---
 
 ## Part 1. Setup OpenAI API
-**Overview**: Configure access to OpenAI’s API to generate categories, questions, and acceptable answer variations. This will be the foundation for dynamic game content.
+**Overview**: Configure access to OpenAI’s API to generate categories, questions, and acceptable answer variations. This will be the foundation for dynamic game content.  
 **Resources Needed**: OpenAI API key, Node.js, `openai` npm package
 
-- [ ] Step 1: Set up OpenAI SDK
-    - [ ] Sub-step a: Install OpenAI SDK
-        - [ ] `npm install openai dotenv`
-    - [ ] Sub-step b: Create `.env` file
-        - [ ] Add `OPENAI_API_KEY=your-key-here`
-    - [ ] Sub-step c: Create `openaiUtils.js`
-        - [ ] Import OpenAI and initialize with API key from `.env`
-
-- [ ] Step 2: Write a function to generate categories
-    - [ ] Sub-step a: Use a prompt like `Generate five unique Jeopardy categories in JSON format`
-    - [ ] Sub-step b: Parse the response and return an array
-
-- [ ] Step 3: Write a function to generate questions for a category
-    - [ ] Sub-step a: Prompt format: `Generate 6 Jeopardy questions with answers and acceptable variations for the category [CATEGORY]. Format response as JSON.`
-    - [ ] Sub-step b: Parse and normalize the data
-    - [ ] Sub-step c: Handle unexpected formats or malformed JSON
+- [ ] Install OpenAI SDK  
+    - [ ] `npm install openai dotenv`
+- [ ] Create `.env` file  
+    - [ ] Add `OPENAI_API_KEY=your-key-here`
+- [ ] Create `openaiUtils.js`  
+    - [ ] Import OpenAI and initialize with API key from `.env`
+- [ ] Write a function to generate categories  
+    - [ ] Prompt: `Generate five unique Jeopardy categories in JSON format`
+    - [ ] Parse the response and return an array
+- [ ] Write a function to generate questions for a category  
+    - [ ] Prompt: `Generate 6 Jeopardy questions with answers and acceptable variations for the category [CATEGORY]. Format response as JSON.`
+    - [ ] Parse and normalize the data
+    - [ ] Handle malformed JSON or unexpected formats
 
 **Potential Issues**:
 - Hitting rate limits — throttle API requests
@@ -50,21 +50,19 @@ outline of what i think needs to happen next and what i've done
 
 ---
 
-## Part 2. Set Up Local SQLite Database
-**Overview**: Store categories, questions, acceptable answers, and player responses in a structured way.
+## Part 2. Set Up Local SQLite Database  
+**Overview**: Store categories, questions, acceptable answers, and player responses in a structured way.  
 **Resources Needed**: `sqlite3` npm package
 
-- [ ] Step 1: Install and set up SQLite
+- [ ] Install and set up SQLite  
     - [ ] `npm install sqlite3`
     - [ ] Create `database.js` file
     - [ ] Export initialized database connection
-
-- [ ] Step 2: Define database schema
+- [ ] Define database schema  
     - [ ] `categories` table: `id`, `name`
     - [ ] `questions` table: `id`, `category_id`, `question`, `correct_answer`, `acceptable_answers` (JSON array)
     - [ ] `player_answers` table: `id`, `player_id`, `question_id`, `answer`, `is_correct`, `time_taken`
-
-- [ ] Step 3: Seed the database
+- [ ] Seed the database  
     - [ ] Save generated categories and questions
     - [ ] Save acceptable answer variations as JSON blobs
 
@@ -74,16 +72,15 @@ outline of what i think needs to happen next and what i've done
 
 ---
 
-## Part 3. Build Data Generator Script
-**Overview**: Orchestrate the process of generating and storing a full Jeopardy game round.
+## Part 3. Build Data Generator Script  
+**Overview**: Orchestrate the process of generating and storing a full Jeopardy game round.  
 **Resources Needed**: `openaiUtils.js`, `database.js`
 
-- [ ] Step 1: Create `generateGameData.js`
-    - [ ] Sub-step a: Import category generator
-    - [ ] Sub-step b: Loop through categories and fetch questions
-    - [ ] Sub-step c: Save all data into the database
-
-- [ ] Step 2: Validate and log output
+- [ ] Create `generateGameData.js`  
+    - [ ] Import category generator
+    - [ ] Loop through categories and fetch questions
+    - [ ] Save all data into the database
+- [ ] Validate and log output  
     - [ ] Print a preview of stored categories and questions
     - [ ] Handle and retry failed generations
 
@@ -93,22 +90,20 @@ outline of what i think needs to happen next and what i've done
 
 ---
 
-## Part 4. WebSocket Multiplayer Game Server
-**Overview**: Build the real-time multiplayer engine with Socket.io to handle player connections and game state.
+## Part 4. WebSocket Multiplayer Game Server  
+**Overview**: Build the real-time multiplayer engine with Socket.io to handle player connections and game state.  
 **Resources Needed**: `express`, `socket.io`
 
-- [ ] Step 1: Set up WebSocket server (`server.js`)
+- [ ] Set up WebSocket server (`server.js`)  
     - [ ] `npm install express socket.io`
     - [ ] Create Express server
     - [ ] Attach Socket.io to HTTP server
-
-- [ ] Step 2: Define WebSocket events
+- [ ] Define WebSocket events  
     - [ ] `connection`: log and identify player
     - [ ] `squareSelected`: broadcast question to all players
     - [ ] `submitAnswer`: record answer and response time
     - [ ] `revealResults`: send correct answers and scores
-
-- [ ] Step 3: Track game state in memory
+- [ ] Track game state in memory  
     - [ ] Current player turn
     - [ ] Selected questions
     - [ ] Player scores
@@ -119,17 +114,15 @@ outline of what i think needs to happen next and what i've done
 
 ---
 
-## Part 5. Frontend Integration
-**Overview**: Connect client to WebSocket server and display real-time gameplay updates.
+## Part 5. Frontend Integration  
+**Overview**: Connect client to WebSocket server and display real-time gameplay updates.  
 **Resources Needed**: `index.html`, browser console
 
-- [ ] Step 1: Add Socket.io client to HTML
+- [ ] Add Socket.io client to HTML  
     - [ ] `<script src="/socket.io/socket.io.js"></script>`
-
-- [ ] Step 2: Connect to server on load
+- [ ] Connect to server on load  
     - [ ] `const socket = io();`
-
-- [ ] Step 3: Implement core events
+- [ ] Implement core events  
     - [ ] Send `squareSelected` on cell click
     - [ ] Listen for `questionShown` and display it
     - [ ] Submit answer via `submitAnswer`
@@ -141,19 +134,17 @@ outline of what i think needs to happen next and what i've done
 
 ---
 
-## Part 6. Answer Matching and Scoring
-**Overview**: Compare submitted answers against acceptable variations for flexible scoring.
+## Part 6. Answer Matching and Scoring  
+**Overview**: Compare submitted answers against acceptable variations for flexible scoring.  
 **Resources Needed**: JSON-stored variations, string matching logic
 
-- [ ] Step 1: Normalize user input
+- [ ] Normalize user input  
     - [ ] Convert to lowercase
     - [ ] Trim whitespace and punctuation
-
-- [ ] Step 2: Check against acceptable answers
+- [ ] Check against acceptable answers  
     - [ ] Use `acceptable_answers.includes(userAnswer)`
     - [ ] Optional: implement fuzzy matching for partial credit
-
-- [ ] Step 3: Store results in `player_answers`
+- [ ] Store results in `player_answers`
 
 **Potential Issues**:
 - Ambiguous answers — store original text + match status
@@ -161,22 +152,19 @@ outline of what i think needs to happen next and what i've done
 
 ---
 
-## Part 7. Prepare for Production
-**Overview**: Plan to move to serverless/cloud-based architecture for deployment.
+## Part 7. Prepare for Production  
+**Overview**: Plan to move to serverless/cloud-based architecture for deployment.  
 **Resources Needed**: Supabase or Firebase, GitHub Actions
 
-- [ ] Step 1: Migrate from SQLite to cloud DB
+- [ ] Migrate from SQLite to cloud DB  
     - [ ] Export and reformat schema
     - [ ] Use cloud DB SDK for reads/writes
-
-- [ ] Step 2: Create API layer
+- [ ] Create API layer  
     - [ ] Use serverless functions to handle game logic
     - [ ] Add auth layer if needed
-
-- [ ] Step 3: Separate front-end for deployment
+- [ ] Separate front-end for deployment  
     - [ ] Deploy static site to GitHub Pages / Vercel / Netlify
-
-- [ ] Step 4: Exclude local-only files from Git
+- [ ] Exclude local-only files from Git  
     - [ ] `.env`, `*.db`
 
 **Potential Issues**:
@@ -185,14 +173,13 @@ outline of what i think needs to happen next and what i've done
 
 ---
 
-## Part 8. (Optional) Improve Answer Matching with AI
-**Overview**: Use OpenAI to evaluate correctness for subjective answers or obscure trivia.
+## Part 8. (Optional) Improve Answer Matching with AI  
+**Overview**: Use OpenAI to evaluate correctness for subjective answers or obscure trivia.  
 **Resources Needed**: OpenAI API
 
-- [ ] Step 1: Build fallback evaluation function
+- [ ] Build fallback evaluation function  
     - [ ] Prompt: “Is the answer '[user answer]' acceptable for the question '[question]'?”
-
-- [ ] Step 2: Call AI when local match fails
+- [ ] Call AI when local match fails  
     - [ ] If no match found, send API request
     - [ ] Use score or judgment to award points
 
@@ -203,6 +190,7 @@ outline of what i think needs to happen next and what i've done
 ---
 
 ## Final Step: Test Full Game Loop
+
 - [ ] Generate fresh data using OpenAI
 - [ ] Serve game page and connect two clients
 - [ ] Play through full game with scoring
@@ -211,6 +199,7 @@ outline of what i think needs to happen next and what i've done
 ---
 
 ## Bonus: Add Admin Tools
+
 - [ ] Export all question sets for moderation
 - [ ] Add dashboard to review player stats
 - [ ] Add game reset/next round controls
