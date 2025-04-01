@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1a0033, #330066); /* Purple gradient */
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3; /* Faint Matrix code rain */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+header h1 {
+    font-family: 'VT323', monospace;
+    font-size: 48px;
+    color: #ff00ff; /* Neon pink */
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+}
+
+nav a {
+    color: #00ffff; /* Neon cyan */
+    text-decoration: none;
+    margin: 0 15px;
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+    text-shadow: 0 0 5px #00ffff;
+}
+
+nav a:hover {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+main {
+    text-align: center;
+}
+
+.game-placeholder {
+    margin: 40px 0;
+}
+
+.game-placeholder img {
+    width: 100%;
+    max-width: 600px;
+    border: 3px solid #00ffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #00ffff;
+}
+
+.event-details {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    backdrop-filter: blur(5px);
+}
+
+.event-details h2 {
+    font-family: 'VT323', monospace;
+    font-size: 36px;
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+    margin-bottom: 10px;
+}
+
+.event-details p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.subscribe-btn {
+    background: #ff00ff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 0 0 5px #000;
+    box-shadow: 0 0 10px #ff00ff;
+    margin-top: 10px;
+}
+
+.subscribe-btn:hover {
+    background: #00ffff;
+    color: #000;
+    box-shadow: 0 0 20px #00ffff;
+}
+
+.about, .hosted-by {
+    margin: 40px 0;
+    text-align: left;
+}
+
+.about h3, .hosted-by h3 {
+    font-family: 'VT323', monospace;
+    font-size: 28px;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+    margin-bottom: 10px;
+}
+
+.about p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.hosted-by .host {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.host-icon {
+    width: 40px;
+    height: 40px;
+    background: #ff00ff;
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: 0 0 10px #ff00ff;
+}
+
+.host p {
+    font-size: 18px;
+}
