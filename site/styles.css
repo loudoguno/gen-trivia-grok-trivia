@@ -427,4 +427,35 @@ h1 {
 .markdown-body strong {
     color: var(--neon-green);
     text-shadow: 0 0 5px var(--neon-green);
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.music-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    color: #0f0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.music-control:hover {
+    background: rgba(0, 255, 0, 0.2);
+}
+
+.music-icon {
+    font-size: 1.2rem;
+}
+
+.music-text {
+    font-family: 'Courier New', monospace;
 } 

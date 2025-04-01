@@ -145,4 +145,66 @@ function showNotification() {
 // Add click handlers to all buttons
 document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', showNotification);
+});
+
+// Music player functionality
+let audioPlayer = null;
+let playlist = [];
+let currentTrackIndex = 0;
+
+function initializeMusicPlayer() {
+    // Get all MP3 files from the music directory
+    fetch('music/')
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            playlist = Array.from(doc.querySelectorAll('a'))
+                .filter(a => a.href.endsWith('.mp3'))
+                .map(a => a.href);
+            
+            if (playlist.length > 0) {
+                // Shuffle the playlist
+                for (let i = playlist.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+                }
+                
+                // Create and configure audio player
+                audioPlayer = new Audio();
+                audioPlayer.addEventListener('ended', playNextTrack);
+                
+                // Start playing
+                playNextTrack();
+            }
+        })
+        .catch(error => console.error('Error loading music:', error));
+}
+
+function playNextTrack() {
+    if (!audioPlayer || playlist.length === 0) return;
+    
+    audioPlayer.src = playlist[currentTrackIndex];
+    audioPlayer.play().catch(error => console.error('Error playing track:', error));
+    
+    // Move to next track, loop back to start if at end
+    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+}
+
+// Initialize music player when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    initializeMusicPlayer();
+});
+
+// Music toggle functionality
+document.getElementById('toggleMusic').addEventListener('click', () => {
+    if (audioPlayer) {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            document.querySelector('.music-icon').textContent = '🎵';
+        } else {
+            audioPlayer.pause();
+            document.querySelector('.music-icon').textContent = '⏸️';
+        }
+    }
 }); 
